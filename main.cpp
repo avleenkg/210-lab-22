@@ -53,7 +53,10 @@ public:
         if (!head) return;
 
         Node* temp = head;
-        if ()
+        head = temp->next;
+        temp->prev = nullptr;
+
+        delete temp;
     }
 
     void insert_after(int value, int position) {
@@ -160,6 +163,17 @@ int main() {
     cout << endl;
     cout << "New list:";
     list.print();
+
+    cout << "Would you like to delete the head node? y/n: ";
+    char entry;
+    cin >> entry;
+    entry = tolower(entry);
+    if(entry == 'y'){
+        list.pop_front();
+    }
+    else{
+        return;
+    }
 
     //cout << "List backward: ";
     //list.print_reverse();
