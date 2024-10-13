@@ -104,11 +104,28 @@ public:
     }
 
     void deleteNode_2(int pos){
-        if (!head) return;
+        if (!head) return; //if list is empty
 
         Node* temp = head;
-        
+        for (int i = 0; i < (pos-1) && temp; i++){ //traverse to node right before position
+            temp = temp->next;
+        }        
 
+        if (!temp) return; //position greater than list length
+        
+         if (temp->prev) {
+            temp->prev->next = temp->next;
+        } else {
+            head = temp->next; // Deleting the head
+        }
+
+        if (temp->next) {
+            temp->next->prev = temp->prev;
+        } else {
+            tail = temp->prev; // Deleting the tail
+        }
+
+        delete temp;
     }
 
     void print() {
@@ -150,13 +167,19 @@ int main() {
     cout << "List forward: ";
     list.print();
 
-    cout << "List backward: ";
-    list.print_reverse();
+    cout << "Which node to delete? ";
+    int pos;
+    cin >> pos;
+    deleteNode_2(pos);
 
-    cout << "Deleting list, then trying to print.\n";
+    //cout << "List backward: ";
+    //list.print_reverse();
+
+
+    /*cout << "Deleting list, then trying to print.\n";
     list.~DoublyLinkedList();
     cout << "List forward: ";
-    list.print();
+    list.print();*/
 
     return 0;
 }
