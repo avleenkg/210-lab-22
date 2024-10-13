@@ -54,8 +54,17 @@ public:
 
         Node* temp = head;
         head = temp->next;
-        temp->prev = nullptr;
 
+        delete temp;
+    }
+
+    void pop_back(){
+        if (!tail) return;
+
+        Node* temp = tail;
+        tail = temp->prev;
+        tail->next = nullptr;
+        
         delete temp;
     }
 
@@ -88,6 +97,30 @@ public:
         else
             tail = newNode; // Inserting at the end
         temp->next = newNode;
+    }
+
+    void delete_val(int value) {
+        if (!head) return; // Empty list
+
+        Node* temp = head;
+        while (temp && temp->data != value)
+            temp = temp->next;
+
+        if (!temp) return; // Value not found
+
+        if (temp->prev) {
+            temp->prev->next = temp->next;
+        } else {
+            head = temp->next; // Deleting the head
+        }
+
+        if (temp->next) {
+            temp->next->prev = temp->prev;
+        } else {
+            tail = temp->prev; // Deleting the tail
+        }
+
+        delete temp;
     }
 
     void deleteNode_2(int pos){
@@ -156,23 +189,40 @@ int main() {
     list.print();
     cout << endl;
 
-    cout << "Which node to delete? Enter position: ";
+    cout << "Which node to delete? Enter position: "; //deleting by pos-------------------
     int pos;
     cin >> pos;
     list.deleteNode_2(pos);
     cout << endl;
-    cout << "New list:";
+    cout << "New list: ";
     list.print();
+    cout << endl;
 
-    cout << "Would you like to delete the head node? y/n: ";
+    cout << "Would you like to delete the head node? y/n: "; //deleting head node-----------------
     char entry;
     cin >> entry;
     entry = tolower(entry);
     if(entry == 'y'){
         list.pop_front();
+        cout << "Deleted.\n";
+        list.print();
     }
     else{
-        return;
+        cout << "List untouched:\n";
+        list.print();
+    }
+
+    cout << "Would you like to delete the tail node? y/n: "; //deleting tail node-----------------
+    cin >> entry;
+    entry = tolower(entry);
+    if(entry == 'y'){
+        list.pop_back();
+        cout << "Deleted.\n";
+        list.print();
+    }
+    else{
+        cout << "List untouched:\n";
+        list.print();
     }
 
     //cout << "List backward: ";
