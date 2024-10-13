@@ -54,6 +54,7 @@ public:
 
         Node* temp = head;
         head = temp->next;
+        head->prev = nullptr;
 
         delete temp;
     }
@@ -224,15 +225,16 @@ int main() {
         cout << "List untouched:\n";
         list.print();
     }
+    cout << endl;
 
-    //cout << "List backward: ";
-    //list.print_reverse();
+    cout << "List backward: ";
+    list.print_reverse();
 
 
-    /*cout << "Deleting list, then trying to print.\n";
+    cout << "Deleting list, then trying to print.\n";
     list.~DoublyLinkedList();
     cout << "List forward: ";
-    list.print();*/
+    list.print();
 
     return 0;
 }
