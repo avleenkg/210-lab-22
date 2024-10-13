@@ -2,6 +2,7 @@
 //upgrade dll class to delete by position instead of value
 
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -48,6 +49,13 @@ public:
         }
     }
 
+    void pop_front(){
+        if (!head) return;
+
+        Node* temp = head;
+        if ()
+    }
+
     void insert_after(int value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
@@ -79,41 +87,17 @@ public:
         temp->next = newNode;
     }
 
-    void delete_node(int value) {
-        if (!head) return; // Empty list
-
-        Node* temp = head;
-        while (temp && temp->data != value)
-            temp = temp->next;
-
-        if (!temp) return; // Value not found
-
-        if (temp->prev) {
-            temp->prev->next = temp->next;
-        } else {
-            head = temp->next; // Deleting the head
-        }
-
-        if (temp->next) {
-            temp->next->prev = temp->prev;
-        } else {
-            tail = temp->prev; // Deleting the tail
-        }
-
-        delete temp;
-    }
-
     void deleteNode_2(int pos){
         if (!head) return; //if list is empty
 
         Node* temp = head;
-        for (int i = 0; i < (pos-1) && temp; i++){ //traverse to node right before position
+        for (int i = 0; i < (pos-1) && temp; i++){ //traverse to node 
             temp = temp->next;
         }        
 
         if (!temp) return; //position greater than list length
         
-         if (temp->prev) {
+        if (temp->prev) {
             temp->prev->next = temp->next;
         } else {
             head = temp->next; // Deleting the head
@@ -159,6 +143,7 @@ public:
 
 // Driver program
 int main() {
+    srand(time(0));
     DoublyLinkedList list;
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
@@ -166,11 +151,15 @@ int main() {
         list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
     cout << "List forward: ";
     list.print();
+    cout << endl;
 
-    cout << "Which node to delete? ";
+    cout << "Which node to delete? Enter position: ";
     int pos;
     cin >> pos;
-    deleteNode_2(pos);
+    list.deleteNode_2(pos);
+    cout << endl;
+    cout << "New list:";
+    list.print();
 
     //cout << "List backward: ";
     //list.print_reverse();
